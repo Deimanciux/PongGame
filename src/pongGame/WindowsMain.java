@@ -15,8 +15,8 @@ public class WindowsMain extends JFrame {
     private final GameRules gameRules;
     private final WindowsRenderer windowsRenderer;
     private final Timer timer;
-    private GameEnd gameEnd;
-    private GameStart gameStart;
+    private final GameEnd gameEnd;
+    private final GameStart gameStart;
 
     public WindowsMain() throws IOException {
         super.setPreferredSize(new Dimension(900, 600));
@@ -24,21 +24,18 @@ public class WindowsMain extends JFrame {
         super.setVisible(true);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        Score score = new Score();
-        gameStart = new GameStart();
-        gameEnd = new GameEnd();
         GameTable gameTable = new GameTable();
 
-        this.gameLevel = new GameLevel(gameTable, score);
+        this.gameStart = new GameStart();
+        this.gameEnd = new GameEnd();
+        this.gameLevel = new GameLevel(gameTable);
         this.gameRules = new GameRules();
         this.windowsRenderer = new WindowsRenderer();
 
         super.addKeyListener(new KeyListener() {
 
             @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
+            public void keyTyped(KeyEvent e) {}
 
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -55,7 +52,7 @@ public class WindowsMain extends JFrame {
                         gameLevel.getPaddle2().setYDirection(1);
                         break;
                     case KeyEvent.VK_Y:
-                        if(gameRules.isGameJustStarted()) {
+                        if (gameRules.isGameJustStarted()) {
                             timer.start();
                             gameRules.setGameJustStarted(false);
                         }
@@ -65,11 +62,9 @@ public class WindowsMain extends JFrame {
                         setVisible(false);
                         dispose();
                 }
-                gameLevel.getPaddle1().move();
-                gameLevel.getPaddle2().move();
-                gameRules.stopPaddleIfInTheCorner(gameLevel.getPaddle1());
-                gameRules.stopPaddleIfInTheCorner(gameLevel.getPaddle2());
 
+                movePaddles();
+                checkPaddleCollisions();
                 repaint();
             }
 
@@ -92,25 +87,38 @@ public class WindowsMain extends JFrame {
             repaint();
 
             gameLevel.getBall().move();
-            gameRules.bounceBallFromPaddle(gameLevel.getPaddle1(), gameLevel.getBall());
-            gameRules.bounceBallFromPaddle(gameLevel.getPaddle2(), gameLevel.getBall());
-            gameRules.changeDirectionIfBallHitWall(gameLevel.getBall(), gameLevel.getScore());
-            gameRules.makeGameEnd(gameLevel.getScore());
+            checkBallCollisions();
         });
+    }
 
+    private void movePaddles() {
+        gameLevel.getPaddle1().move();
+        gameLevel.getPaddle2().move();
+    }
+
+    private void checkPaddleCollisions() {
+        gameRules.stopPaddleIfInTheCorner(gameLevel.getPaddle1());
+        gameRules.stopPaddleIfInTheCorner(gameLevel.getPaddle2());
+    }
+
+    private void checkBallCollisions() {
+        gameRules.bounceBallFromPaddle(gameLevel.getPaddle1(), gameLevel.getBall());
+        gameRules.bounceBallFromPaddle(gameLevel.getPaddle2(), gameLevel.getBall());
+        gameRules.changeDirectionIfBallHitWall(gameLevel.getBall(), gameLevel.getScore());
+        gameRules.setGameEnd(gameLevel.getScore());
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        if(gameRules.isGameJustStarted()) {
+        if (gameRules.isGameJustStarted()) {
             this.gameStart.draw(g);
         } else {
             this.gameStart.deleteString(g);
         }
 
-        if(gameRules.isGameOver()) {
+        if (gameRules.isGameOver()) {
             timer.stop();
             this.gameEnd.draw(g);
         }

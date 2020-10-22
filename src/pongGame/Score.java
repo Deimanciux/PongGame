@@ -2,12 +2,12 @@ package pongGame;
 
 import java.awt.*;
 
-public class Score extends Rectangle{
+public class Score extends Rectangle {
 
     int player1 = 0;
     int player2 = 0;
 
-    Score(){
+    Score() {
     }
 
     public int getPlayer1() {
@@ -28,9 +28,9 @@ public class Score extends Rectangle{
 
     public void draw(Graphics g) {
         g.setColor(Color.black);
-        g.setFont(new Font("Consolas",Font.PLAIN,60));
+        g.setFont(new Font("Consolas", Font.PLAIN, 60));
 
-        g.drawString(String.valueOf(player1/10)+String.valueOf(player1%10), 20, 90);
-        g.drawString(String.valueOf(player2/10)+String.valueOf(player2%10), 100, 90);
+        g.drawString((player1 / 10) + String.valueOf(player1 % 10), 20, 90);
+        g.drawString((player2 / 10) + String.valueOf(player2 % 10), 100, 90);
     }
 }

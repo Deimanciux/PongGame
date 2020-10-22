@@ -30,8 +30,4 @@ public class GameTable {
     public int width() {
         return TABLE_WIDTH;
     }
-
-    public int height() {
-        return TABLE_HEIGHT;
-    }
 }

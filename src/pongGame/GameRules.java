@@ -1,7 +1,5 @@
 package pongGame;
 
-import java.util.ArrayList;
-
 public class GameRules {
 
     static final int POINTS_FOR_END = 1;
@@ -10,28 +8,6 @@ public class GameRules {
 
     public GameRules() {
     }
-
-    public void processUserInput(int key, Paddle paddle) {
-        switch (paddle.getId()) {
-            case 1:
-                if (key == 'w') {
-                    paddle.setYDirection(-1);
-                }
-                if (key == 's') {
-                    paddle.setYDirection(1);
-                }
-                break;
-            case 2:
-                if (key == 'e') {
-                    paddle.setYDirection(-1);
-                }
-                if (key == 'd') {
-                    paddle.setYDirection(1);
-                }
-                break;
-        }
-    }
-
 
     public void changeDirectionIfBallHitWall(Ball ball, Score score) {
 
@@ -58,22 +34,6 @@ public class GameRules {
             ball.changeXDirection(-1);
             score.setPlayer2(score.getPlayer1() + 1);
         }
-    }
-
-    public void stopPaddlesIfInTheCorner(ArrayList<Paddle> paddles) {
-        for (Paddle paddle : paddles) {
-            for (Position position : paddle.getPositions()) {
-                if (position.getY() <= 0) {
-                    defineUpperCornerPositions(paddle);
-                    continue;
-                }
-
-                if (position.getY() >= GameTable.TABLE_HEIGHT - Paddle.PADDLE_HEIGHT + 1) {
-                    defineLowerCornerPositions(paddle);
-                }
-            }
-        }
-
     }
 
     public void stopPaddleIfInTheCorner(Paddle paddle) {
@@ -117,16 +77,8 @@ public class GameRules {
         }
     }
 
-    public void incrementScore(Paddle paddle, Score score) {
-        if(paddle.getId() == 1) {
-            score.setPlayer1(score.getPlayer1() + 1);
-        } else {
-            score.setPlayer2(score.getPlayer2() + 1);
-        }
-    }
-
-    public void makeGameEnd(Score score) {
-        if(score.getPlayer1() ==  POINTS_FOR_END || score.getPlayer2() ==  POINTS_FOR_END) {
+    public void setGameEnd(Score score) {
+        if (score.getPlayer1() == POINTS_FOR_END || score.getPlayer2() == POINTS_FOR_END) {
             setGameOver(true);
         }
     }

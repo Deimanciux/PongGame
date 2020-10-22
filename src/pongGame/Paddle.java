@@ -8,7 +8,6 @@ public class Paddle {
     private final int id;
     private int yDirection;
     private final ArrayList<Position> positions = new ArrayList<>();
-    private int score = 0;
 
     Paddle(int id, Position position) {
         this.id = id;
@@ -37,6 +36,7 @@ public class Paddle {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -46,13 +46,5 @@ public class Paddle {
 
     public int getId() {
         return id;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 }

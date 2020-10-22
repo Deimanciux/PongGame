@@ -44,10 +44,6 @@ public class Ball {
         xDirection = xDirection * changer;
     }
 
-    public boolean at(int y, int x) {
-        return position.getY() == y && position.getX() == x;
-    }
-
     public Position getPosition() {
         return position;
     }
