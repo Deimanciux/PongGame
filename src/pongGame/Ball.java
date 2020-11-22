@@ -7,7 +7,7 @@ public class Ball {
     private int yDirection;
     private final Position position;
 
-    Ball(Position position) {
+    public Ball(Position position) {
         this.position = position;
         setXDirection(randomDirection());
         setYDirection(randomDirection());
@@ -34,6 +34,10 @@ public class Ball {
 
     public int getXDirection() {
         return xDirection;
+    }
+
+    public int getyDirection() {
+        return yDirection;
     }
 
     public void changeYDirection(int changer) {

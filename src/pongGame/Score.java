@@ -1,13 +1,18 @@
 package pongGame;
 
-import java.awt.*;
+public class Score extends TextDrawer {
 
-public class Score extends Rectangle {
+    private int player1 = 0;
+    private int player2 = 0;
 
-    int player1 = 0;
-    int player2 = 0;
+    public Score() {
+        super(new Position(90, 20), 50);
+    }
 
-    Score() {
+    @Override
+    protected String setText() {
+        return (player1 / 10) + String.valueOf(player1 % 10) +
+                " " + (player2 / 10) + player2 % 10;
     }
 
     public int getPlayer1() {
@@ -24,13 +29,5 @@ public class Score extends Rectangle {
 
     public void setPlayer2(int player2) {
         this.player2 = player2;
-    }
-
-    public void draw(Graphics g) {
-        g.setColor(Color.black);
-        g.setFont(new Font("Consolas", Font.PLAIN, 60));
-
-        g.drawString((player1 / 10) + String.valueOf(player1 % 10), 20, 90);
-        g.drawString((player2 / 10) + String.valueOf(player2 % 10), 100, 90);
     }
 }

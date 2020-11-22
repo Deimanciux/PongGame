@@ -9,7 +9,7 @@ public class Paddle {
     private int yDirection;
     private final ArrayList<Position> positions = new ArrayList<>();
 
-    Paddle(int id, Position position) {
+    public Paddle(int id, Position position) {
         this.id = id;
 
         for (int y = 0; y < PADDLE_HEIGHT; y++) {
@@ -46,5 +46,9 @@ public class Paddle {
 
     public int getId() {
         return id;
+    }
+
+    public int getyDirection() {
+        return yDirection;
     }
 }

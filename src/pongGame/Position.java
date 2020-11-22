@@ -28,4 +28,12 @@ public class Position {
     public boolean at(int y, int x) {
         return this.y == y && this.x == x;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

@@ -1,12 +1,23 @@
 package pongGame;
 
-public class GameRules {
+import javax.swing.*;
+
+public class GameRules extends JFrame {
 
     static final int POINTS_FOR_END = 1;
     private boolean gameOver = false;
     private boolean gameJustStarted = true;
+    private static GameRules instance;
 
-    public GameRules() {
+    private GameRules() {
+    }
+
+    public static GameRules getInstance() {
+        if (instance == null) {
+            instance = new GameRules();
+        }
+
+        return instance;
     }
 
     public void changeDirectionIfBallHitWall(Ball ball, Score score) {
@@ -81,6 +92,32 @@ public class GameRules {
         if (score.getPlayer1() == POINTS_FOR_END || score.getPlayer2() == POINTS_FOR_END) {
             setGameOver(true);
         }
+    }
+
+    public void paddle1MoveUp(Paddle paddle1) {
+        paddle1.setYDirection(-1);
+    }
+
+    public void paddle2MoveUp(Paddle paddle2) {
+        paddle2.setYDirection(-1);
+    }
+
+    public void paddle1MoveDown(Paddle paddle1) {
+        paddle1.setYDirection(1);
+    }
+
+    public void paddle2MoveDown(Paddle paddle) {
+        paddle.setYDirection(1);
+    }
+
+    public void startGame() {
+        if (GameRules.getInstance().isGameJustStarted()) {
+            GameRules.getInstance().setGameJustStarted(false);
+        }
+    }
+
+    public void endGame() {
+        setGameOver(true);
     }
 
     public boolean isGameOver() {

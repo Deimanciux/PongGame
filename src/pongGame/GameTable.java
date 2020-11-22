@@ -1,7 +1,6 @@
 package pongGame;
 
 public class GameTable {
-
     static final int TABLE_HEIGHT = 21;
     static final int TABLE_WIDTH = 40;
     private final int[][] table = new int[TABLE_HEIGHT][TABLE_WIDTH];

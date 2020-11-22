@@ -1,5 +1,7 @@
 package pongGame;
 
+import pongGame.Comand.CommandFactory;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.*;
@@ -17,6 +19,7 @@ public class WindowsMain extends JFrame {
     private final Timer timer;
     private final GameEnd gameEnd;
     private final GameStart gameStart;
+    private final CommandFactory commandFactory;
 
     public WindowsMain() throws IOException {
         super.setPreferredSize(new Dimension(900, 600));
@@ -29,38 +32,27 @@ public class WindowsMain extends JFrame {
         this.gameStart = new GameStart();
         this.gameEnd = new GameEnd();
         this.gameLevel = new GameLevel(gameTable);
-        this.gameRules = new GameRules();
+        this.gameRules = GameRules.getInstance();
         this.windowsRenderer = new WindowsRenderer();
+        this.commandFactory = new CommandFactory();
 
         super.addKeyListener(new KeyListener() {
 
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
 
             public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_W:
-                        gameLevel.getPaddle1().setYDirection(-1);
-                        break;
-                    case KeyEvent.VK_S:
-                        gameLevel.getPaddle1().setYDirection(1);
-                        break;
-                    case KeyEvent.VK_UP:
-                        gameLevel.getPaddle2().setYDirection(-1);
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        gameLevel.getPaddle2().setYDirection(1);
-                        break;
-                    case KeyEvent.VK_Y:
-                        if (gameRules.isGameJustStarted()) {
-                            timer.start();
-                            gameRules.setGameJustStarted(false);
-                        }
-                        break;
-                    case KeyEvent.VK_Q:
-                        timer.stop();
-                        setVisible(false);
-                        dispose();
+                if (gameRules.isGameJustStarted()) {
+                    timer.start();
+                }
+
+                commandFactory.createCommandByKeyPressed(e, gameLevel).execute();
+
+                if (gameRules.isGameOver()) {
+                    timer.stop();
+                    setVisible(false);
+                    dispose();
                 }
 
                 movePaddles();

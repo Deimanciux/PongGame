@@ -3,14 +3,15 @@ package pongGame;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameStart {
+public class GameStart extends TextDrawer {
+
     public GameStart() {
+        super(new Position(90, 180), 40);
     }
 
-    public void draw(Graphics g) {
-        g.setColor(Color.black);
-        g.setFont(new Font("Consolas", Font.PLAIN, 40));
-        g.drawString("If you want to start press Y", 180, 90);
+    @Override
+    String setText() {
+        return "If you want to start press Y";
     }
 
     public void deleteString(Graphics g) {
