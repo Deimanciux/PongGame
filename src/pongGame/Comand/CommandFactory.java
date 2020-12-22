@@ -1,7 +1,6 @@
 package pongGame.Comand;
 
 import pongGame.GameLevel;
-
 import java.awt.event.KeyEvent;
 
 public class CommandFactory {

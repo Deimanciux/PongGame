@@ -19,7 +19,7 @@ public class PaddleTest {
     }
 
     @Test
-    public void  testMoveUpPaddle() {
+    public void testMoveUpPaddle() {
         Paddle paddle = new Paddle(1, new Position(10, 1));
         paddle.setYDirection(-1);
 
